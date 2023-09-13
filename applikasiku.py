@@ -2,11 +2,23 @@ import streamlit as st
 import gspread
 from google.oauth2 import service_account
 import pandas as pd
+# Specify the path to your JSON key file
+keyfile_path = "path/to/your/keyfile.json"
+
+# Specify the desired OAuth2 scopes
+scopes = ['https://www.googleapis.com/auth/spreadsheets']
+
+# Load credentials from the JSON key file
+credentials = service_account.Credentials.from_service_account_file(
+    "https://github.com/Frenky-sinaga/Frenky-sinaga/blob/main/masterstore-398408-e5a0bae4d629.json", scopes=scopes
+)
+
+
 
 
 # Set up the scope and credentials
-scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = service_account.from_json_keyfile_name("https://github.com/Frenky-sinaga/Frenky-sinaga/blob/main/masterstore-398408-e5a0bae4d629.json", scope)
+#scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+#creds = service_account.from_json_keyfile_name("https://github.com/Frenky-sinaga/Frenky-sinaga/blob/main/masterstore-398408-e5a0bae4d629.json", scope)
 
 client = gspread.authorize(creds)
 
