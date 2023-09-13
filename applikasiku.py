@@ -9,7 +9,7 @@ keyfile_path = "path/to/your/keyfile.json"
 scopes = ['https://www.googleapis.com/auth/spreadsheets']
 
 # Load credentials from the JSON key file
-credentials = service_account.Credentials.from_service_account_file("https://github.com/Frenky-sinaga/Frenky-sinaga/blob/main/masterstore-398408-e5a0bae4d629.json",scopes=scopes)
+credentials = service_account.Credentials.from_service_account_file("e5a0bae4d6297432a8b32c5389c87d69b48b46fe",scopes=scopes)
 
 
 
