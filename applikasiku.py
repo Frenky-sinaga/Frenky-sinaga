@@ -6,7 +6,7 @@ import pandas as pd
 
 # Set up the scope and credentials
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("https://github.com/Frenky-sinaga/Frenky-sinaga/blob/main/masterstore-398408-e5a0bae4d629.json", scope)
+creds = service_account.from_json_keyfile_name("https://github.com/Frenky-sinaga/Frenky-sinaga/blob/main/masterstore-398408-e5a0bae4d629.json", scope)
 
 client = gspread.authorize(creds)
 
