@@ -4,7 +4,7 @@ from google.oauth2 import service_account
 import pandas as pd
 
 # Define the path to your JSON key file
-keyfile_path = "https://raw.githubusercontent.com/Frenky-sinaga/Frenky-sinaga/main/masterstore-398408-e5a0bae4d629.json"
+keyfile_path = "https://github.com/Frenky-sinaga/Frenky-sinaga/blob/main/masterstore-398408-e5a0bae4d629.json"
 
 # Define the desired OAuth2 scopes
 scopes = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
