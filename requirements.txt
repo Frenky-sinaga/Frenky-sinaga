@@ -1,3 +1,4 @@
 streamlit>=1.22.0
+pandas
 pandasql  # this is for examples/ only
 git+https://github.com/streamlit/gsheets-connection
