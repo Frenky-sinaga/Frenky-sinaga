@@ -2,14 +2,12 @@ import streamlit as st
 import gspread
 from google.oauth2 import service_account
 import pandas as pd
-import gcsfs
 
 def authenticate_google_sheets():
     credentials = service_account.Credentials.from_service_account_file(
         "masterstore-398408-e5a0bae4d629.json", scopes=["https://www.googleapis.com/auth/spreadsheets"]
     )
-    gc = gspread.Client(auth=credentials)
-    gc.login()
+    gc = gspread.service_account(credentials=credentials)
     return gc
     
 # Authenticate and get the Google Sheets client
@@ -43,3 +41,4 @@ else:
     st.warning("Selected category not found.")
 
 # Optional: Add pagination or other features as needed
+
