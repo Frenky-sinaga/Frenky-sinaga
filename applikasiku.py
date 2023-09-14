@@ -9,8 +9,8 @@ def authenticate_google_sheets():
     credentials = service_account.Credentials.from_service_account_file(
         "masterstore-398408-e5a0bae4d629.json", scopes=["https://www.googleapis.com/auth/spreadsheets"]
     )
-    gc = gspread.service_account(credentials=credentials)
-    return gc
+    gc = gspread.Client(auth=credentials)
+gc.session.verify = False  # To suppress SSL certificate verification warnings
 
 # Rest of your code remains the same
 
