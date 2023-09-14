@@ -11,7 +11,7 @@ def authenticate_google_sheets():
     )
 gc = gspread.Client(auth=credentials)
 
-gc.session.verify = False  # To suppress SSL certificate verification warnings
+
 
 # Rest of your code remains the same
 
