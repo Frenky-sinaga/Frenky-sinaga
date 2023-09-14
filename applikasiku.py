@@ -1,48 +1,38 @@
 import streamlit as st
 import gspread
-from google.oauth2 import service_account
+from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
+import gcsfs
 
-# Define the path to your JSON key file
-keyfile_path = "https://github.com/Frenky-sinaga/Frenky-sinaga/blob/main/masterstore-398408-e5a0bae4d629.json"
+# Authenticate with Google Sheets using credentials from JSON file
+def authenticate_google_sheets():
+    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+    creds = ServiceAccountCredentials.from_json_keyfile_name("https://github.com/Frenky-sinaga/Frenky-sinaga/blob/main/masterstore-398408-e5a0bae4d629.json", scope)
+    client = gspread.authorize(creds)
+    return client
 
-# Define the desired OAuth2 scopes
-scopes = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
+# Connect to Google Sheets and fetch data
+def get_data_from_google_sheets():
+    client = authenticate_google_sheets()
+    sheet = client.open("MasterStores").sheet1  # Replace with your Google Sheet name
+    data = sheet.get_all_records()
+    return data
 
-# Authenticate using the JSON key file and scopes
-credentials = service_account.Credentials.from_service_account_file(
-    keyfile_path, scopes=scopes
-)
+# Read JSON data from a cloud storage bucket (e.g., Google Cloud Storage)
+def get_json_data_from_cloud():
+    gcs = gcsfs.GCSFileSystem(project="your-gcs-project")
+    with gcs.open("gs://your-bucket-name/your-json-file.json") as f:
+        json_data = pd.read_json(f)
+    return json_data
 
-# Authorize the client to access Google Sheets
-gc = gspread.Client(auth=credentials)
-gc.session.verify = False  # To suppress SSL certificate verification warnings
+st.title("Streamlit App with Google Sheets and Cloud JSON")
 
-# Open the specific Google Sheets spreadsheet
-spreadsheet = gc.open("MasterStores")
+# Fetch data from Google Sheets
+gs_data = get_data_from_google_sheets()
+st.write("Data from Google Sheets:")
+st.write(pd.DataFrame(gs_data))
 
-# Select a worksheet by name (e.g., "Sheet1")
-worksheet = spreadsheet.worksheet("Sheet1")
-
-# Get all records from the worksheet and convert to a Pandas DataFrame
-data = worksheet.get_all_records()
-df = pd.DataFrame(data)
-
-# Group the data by the "Koneksi" column
-grouped = df.groupby("Koneksi")
-
-# Streamlit UI
-st.title("Google Sheets Data Viewer")
-
-# User selects a category
-selected_category = st.selectbox("Select a Category", list(grouped.groups.keys()))
-
-# Display the selected category's data
-if selected_category in grouped.groups:
-    selected_data = grouped.get_group(selected_category)
-    st.write(f"Displaying data for {selected_category} category:")
-    st.table(selected_data)
-else:
-    st.warning("Selected category not found.")
-
-# Optional: Add pagination or other features as needed
+# Fetch JSON data from cloud storage
+cloud_json_data = get_json_data_from_cloud()
+st.write("JSON Data from Cloud:")
+st.write(cloud_json_data)
