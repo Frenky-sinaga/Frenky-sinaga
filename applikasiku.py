@@ -27,6 +27,7 @@ df = pd.DataFrame(data)
 # Group the data by the "Koneksi" column
 grouped = df.groupby("Koneksi")
 
+
 # Streamlit UI
 st.title("Google Sheets Data Viewer")
 
@@ -42,3 +43,5 @@ else:
     st.warning("Selected category not found.")
 
 # Optional: Add pagination or other features as needed
+
+
