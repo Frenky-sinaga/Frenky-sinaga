@@ -9,6 +9,7 @@ def authenticate_google_sheets():
         "masterstore-398408-e5a0bae4d629.json", scopes=["https://www.googleapis.com/auth/spreadsheets"]
     )
     gc = gspread.service_account(credentials=credentials)
+    gc.login()
     return gc
     
 # Authenticate and get the Google Sheets client
