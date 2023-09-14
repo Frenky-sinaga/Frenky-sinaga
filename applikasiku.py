@@ -6,7 +6,7 @@ import pandas as pd
 def authenticate_google_sheets():
     credentials = service_account.Credentials.from_service_account_file(
         "masterstore-398408-5f63e59d0f2c.json", scopes="https://www.googleapis.com/auth/spreadsheets",
-    "https://www.googleapis.com/auth/drive"]
+    "https://www.googleapis.com/auth/drive"
     )
     gc = gspread.Client(auth=credentials)
     gc.login()
