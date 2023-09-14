@@ -16,10 +16,6 @@ def authenticate_google_sheets():
 
 # Authorize the client to access Google Sheets
 
-# gc = gspread.Client(auth=credentials)
-
-# gc.session.verify = False  # To suppress SSL certificate verification warnings
-
 # Open the specific Google Sheets spreadsheet
 spreadsheet = gc.open("MasterStores")
 
