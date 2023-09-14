@@ -14,28 +14,35 @@ def authenticate_google_sheets():
 
 # Rest of your code remains the same
 
-# Connect to Google Sheets and fetch data
-def get_data_from_google_sheets():
-    client = authenticate_google_sheets()
-    sheet = client.open("MasterStores").sheet1  # Replace with your Google Sheet name
-    data = sheet.get_all_records()
-    return data
+# Authorize the client to access Google Sheets
+gc = gspread.Client(auth=credentials)
+gc.session.verify = False  # To suppress SSL certificate verification warnings
 
-# Read JSON data from a cloud storage bucket (e.g., Google Cloud Storage)
-def get_json_data_from_cloud():
-    gcs = gcsfs.GCSFileSystem(project="your-gcs-project")
-    with gcs.open("gs://your-bucket-name/your-json-file.json") as f:
-        json_data = pd.read_json(f)
-    return json_data
+# Open the specific Google Sheets spreadsheet
+spreadsheet = gc.open("MasterStores")
 
-st.title("Streamlit App with Google Sheets and Cloud JSON")
+# Select a worksheet by name (e.g., "Sheet1")
+worksheet = spreadsheet.worksheet("Sheet1")
 
-# Fetch data from Google Sheets
-gs_data = get_data_from_google_sheets()
-st.write("Data from Google Sheets:")
-st.write(pd.DataFrame(gs_data))
+# Get all records from the worksheet and convert to a Pandas DataFrame
+data = worksheet.get_all_records()
+df = pd.DataFrame(data)
 
-# Fetch JSON data from cloud storage
-cloud_json_data = get_json_data_from_cloud()
-st.write("JSON Data from Cloud:")
-st.write(cloud_json_data)
+# Group the data by the "Koneksi" column
+grouped = df.groupby("Koneksi")
+
+# Streamlit UI
+st.title("Google Sheets Data Viewer")
+
+# User selects a category
+selected_category = st.selectbox("Select a Category", list(grouped.groups.keys()))
+
+# Display the selected category's data
+if selected_category in grouped.groups:
+    selected_data = grouped.get_group(selected_category)
+    st.write(f"Displaying data for {selected_category} category:")
+    st.table(selected_data)
+else:
+    st.warning("Selected category not found.")
+
+# Optional: Add pagination or other features as needed
