@@ -4,18 +4,15 @@ from google.oauth2 import service_account
 import pandas as pd
 import gcsfs
 
-# Authenticate with Google Sheets using credentials from JSON file
 def authenticate_google_sheets():
     credentials = service_account.Credentials.from_service_account_file(
         "masterstore-398408-e5a0bae4d629.json", scopes=["https://www.googleapis.com/auth/spreadsheets"]
     )
-gc = gspread.Client(auth=credentials)
-
-
-
-# Rest of your code remains the same
-
-# Authorize the client to access Google Sheets
+    gc = gspread.service_account(credentials=credentials)
+    return gc
+    
+# Authenticate and get the Google Sheets client
+gc = authenticate_google_sheets()
 
 # Open the specific Google Sheets spreadsheet
 spreadsheet = gc.open("MasterStores")
