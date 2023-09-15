@@ -5,3 +5,4 @@ git+https://github.com/streamlit/gsheets-connection
 google-api-python-client
 google-auth-oauthlib
 matplotlib
+pyplot
