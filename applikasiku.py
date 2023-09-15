@@ -2,7 +2,7 @@ import streamlit as st
 import gspread
 from google.oauth2 import service_account
 import pandas as pd
-import matplotlib.pyplot as plt
+from matplotlib import pyplot as plt
 from gspread_dataframe import get_as_dataframe
 from pandasql import sqldf
 
